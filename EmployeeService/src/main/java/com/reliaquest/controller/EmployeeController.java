@@ -8,31 +8,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reliaquest.entity.Input;
+import com.reliaquest.entity.EmployeeDTO;
 import com.reliaquest.service.EmployeeService;
 import com.reliaquest.service.IEmployeeController;
-import com.reliaquest.entity.Entity;
-
+import com.reliaquest.entity.Employee;
+/**
+ * @author patil_ha
+ */
 @RestController
 @RequestMapping("/api/employees")
-//Entity - entity , Input - inputDTO
-public class EmployeeController implements IEmployeeController<Entity, Input>{
+public class EmployeeController implements IEmployeeController<Employee, EmployeeDTO>{
 
 	@Autowired
 	private EmployeeService employeeService;
 	
 	@Override
-	public ResponseEntity<List<Entity>> getAllEmployees() {
+	public ResponseEntity<List<Employee>> getAllEmployees() {
 		return new ResponseEntity<>(employeeService.getAllEmployees(), HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<List<Entity>> getEmployeesByNameSearch(String searchString) {
+	public ResponseEntity<List<Employee>> getEmployeesByNameSearch(String searchString) {
 		return new ResponseEntity<>(employeeService.getEmployeesByNameSearch(searchString), HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<Entity> getEmployeeById(String id) {
+	public ResponseEntity<Employee> getEmployeeById(String id) {
 		return new ResponseEntity<>(employeeService.getEmployeeById(id), HttpStatus.OK);
 	}
 
@@ -47,7 +48,7 @@ public class EmployeeController implements IEmployeeController<Entity, Input>{
 	}
 
 	@Override
-	public ResponseEntity<Entity> createEmployee(Input employeeInput) {
+	public ResponseEntity<Employee> createEmployee(EmployeeDTO employeeInput) {
 		return new ResponseEntity<>(employeeService.createEmployee(employeeInput),HttpStatus.CREATED);
 	}
 

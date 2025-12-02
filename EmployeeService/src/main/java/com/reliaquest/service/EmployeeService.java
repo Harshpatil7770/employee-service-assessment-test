@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reliaquest.dao.EmployeeRepo;
-import com.reliaquest.entity.Entity;
-import com.reliaquest.entity.Input;
+import com.reliaquest.entity.Employee;
+import com.reliaquest.entity.EmployeeDTO;
 import com.reliaquest.mapper.EmployeeEntityMapper;
 
 @Service
@@ -19,15 +19,15 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeEntityMapper employeeEntityMapper;
 	
-	public List<Entity> getAllEmployees() {
+	public List<Employee> getAllEmployees() {
 		return employeeRepo.findAll();
 	}
 
-	public List<Entity> getEmployeesByNameSearch(String searchString) {
+	public List<Employee> getEmployeesByNameSearch(String searchString) {
 		return employeeRepo.findByFullName(searchString);
 	}
 
-	public Entity getEmployeeById(String id) {
+	public Employee getEmployeeById(String id) {
 		return employeeRepo.findById(Long.valueOf(id)).orElse(null);
 	}
 
@@ -39,14 +39,14 @@ public class EmployeeService {
 		return employeeRepo.findTopTenHigestEarningEmployeeName();
 	}
 
-	public Entity createEmployee(Input employeeInput) {
-		Entity employee = employeeEntityMapper.convertInputToEmployeeEntity(employeeInput);
+	public Employee createEmployee(EmployeeDTO employeeInput) {
+		Employee employee = employeeEntityMapper.convertInputToEmployeeEntity(employeeInput);
 		employeeRepo.save(employee);
 		return employee;
 	}
 
 	public String deleteEmployeeById(String id) {
-		Entity entity = employeeRepo.findById(Long.valueOf(id)).orElse(null);
+		Employee entity = employeeRepo.findById(Long.valueOf(id)).orElse(null);
 		if (entity != null) {
 			employeeRepo.deleteById(Long.valueOf(id));
 			return "Deleted Entity Succesfully!";
